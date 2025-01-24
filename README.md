@@ -15,6 +15,11 @@ two age groups 0 and 1--4).
 mortality rates for females and males in Canada in the period
 2021--2023.
 
-
+To install the development version of the **lifetable** package
+from GitHub:
+```
+ if (!require(remotes)) install.packages("remotes")
+ remotes::install_github("friendly/matlib", build_vignettes = TRUE)
+```
 
 
