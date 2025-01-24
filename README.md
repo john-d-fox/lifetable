@@ -1,4 +1,6 @@
-
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/john-d-fox/lifetable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/john-d-fox/lifetable/actions/workflows/R-CMD-check.yaml) 
+<!-- badges: end -->
 
 # **lifetable**: Create Standard Life Tables
 
