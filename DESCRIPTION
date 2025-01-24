@@ -10,6 +10,7 @@ Description: A function to construct a life table from
   age-specific mortality rates. Both single-year and grouped
   life tables are supported.
 Depends: R (>= 3.5.0)
+Suggests: spelling, testthat
 License: GPL (>= 2)
 Language: en-US
 LazyData: TRUE

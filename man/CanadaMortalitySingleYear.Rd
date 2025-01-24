@@ -9,9 +9,9 @@
 A data frame with 110 rows and 3 columns:
 \describe{
   \item{age}{age in years}
-  \item{q.female}{female mortality rate, probablity of
+  \item{q.female}{female mortality rate, probability of
   dying during the year}
-  \item{q.male}{male mortality rate, probablity of
+  \item{q.male}{male mortality rate, probability of
   dying during the year}
 }
 }

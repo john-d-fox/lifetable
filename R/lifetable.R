@@ -33,7 +33,7 @@
 #' }
 #'
 #' @returns \code{lifeTable()} returns a numeric matrix with rows
-#' labelled by ages (or age intervals) and the following named columns,
+#' labeled by ages (or age intervals) and the following named columns,
 #' where \code{x} is age at the start of each interval:
 #' \code{description}
 #' \item{\code{l[x]}}{number alive at age \code{x}}

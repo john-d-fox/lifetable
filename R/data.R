@@ -5,9 +5,9 @@
 #' \describe{
 #'   \item{start}{age in years at start of age interval}
 #'   \item{end}{age in years at end of age interval}
-#'   \item{q.female}{female mortality rate, annual probablity of
+#'   \item{q.female}{female mortality rate, annual probability of
 #'   dying in the age interval}
-#'   \item{q.male}{male mortality rate, annual probablity of
+#'   \item{q.male}{male mortality rate, annual probability of
 #'   dying in the age interval}
 #' }
 #' @examples
@@ -22,9 +22,9 @@
 #' A data frame with 110 rows and 3 columns:
 #' \describe{
 #'   \item{age}{age in years}
-#'   \item{q.female}{female mortality rate, probablity of
+#'   \item{q.female}{female mortality rate, probability of
 #'   dying during the year}
-#'   \item{q.male}{male mortality rate, probablity of
+#'   \item{q.male}{male mortality rate, probability of
 #'   dying during the year}
 #' }
 #' @source \url{https://doi.org/10.25318/1310011401-eng}

@@ -10,9 +10,9 @@ A data frame with 20 rows and 4 columns:
 \describe{
   \item{start}{age in years at start of age interval}
   \item{end}{age in years at end of age interval}
-  \item{q.female}{female mortality rate, annual probablity of
+  \item{q.female}{female mortality rate, annual probability of
   dying in the age interval}
-  \item{q.male}{male mortality rate, annual probablity of
+  \item{q.male}{male mortality rate, annual probability of
   dying in the age interval}
 }
 }
