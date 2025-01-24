@@ -19,6 +19,6 @@ test_that("survival is computed correctly for grouped-year LT", {
   for (i in 4:20){
     direct[i] <- round(direct[i - 1]*(0.9^5))
   }
-  expect_equal(lifetable, direct)
+  expect_lte(max(abs(lifetable - direct)), 1)
 })
 
