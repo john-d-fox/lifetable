@@ -19,7 +19,7 @@ To install the development version of the **lifetable** package
 from GitHub:
 ```
  if (!require(remotes)) install.packages("remotes")
- remotes::install_github("friendly/matlib", build_vignettes = TRUE)
+ remotes::install_github("john-d-fox/lifetable")
 ```
 
 
