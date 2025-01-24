@@ -1,5 +1,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/john-d-fox/lifetable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/john-d-fox/lifetable/actions/workflows/R-CMD-check.yaml) 
+[![Last Commit](https://img.shields.io/github/last-commit/john-d-fox/lifetable)](https://github.com/john-d-fox/lifetable)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 # **lifetable**: Create Standard Life Tables
