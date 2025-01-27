@@ -24,6 +24,7 @@ from GitHub:
 ```
  if (!require(remotes)) install.packages("remotes")
  remotes::install_github("john-d-fox/lifetable")
+ if (!require(lubridate)) install.packages("lubridate")
 ```
 
 

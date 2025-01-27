@@ -16,8 +16,8 @@ A data frame with 110 rows and 3 columns:
 }
 }
 \source{
-\url{https://doi.org/10.25318/1310011401-eng}
-downloaded 2025-01-23
+Statistics Canada; \url{https://doi.org/10.25318/1310011401-eng};
+downloaded 2025-01-23.
 }
 \usage{
 CanadaMortalitySingleYear

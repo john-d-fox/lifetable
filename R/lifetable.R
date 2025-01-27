@@ -2,16 +2,17 @@
 #'
 #' @description
 #' Construct a life table starting with age-specific mortality rates
-#' \eqn{q}. Both single-year and grouped (e.g., 5-year) life tables
-#' are supported. Life tables begin at age 0.
+#' \eqn{q} (see \code{\link{mortalityRates}}). Both single-year and 
+#' grouped (e.g., 5-year) life tables are supported. Life tables begin 
+#' at age 0.
 #' 
 #' @param q age-specific mortality rates
 #' @param start the age in years at the start of each age interval;
 #' if missing, then the default is single years from \code{0} to 
-#' \code{n - 1}, where \code{end} is the number of intervals
+#' \code{n - 1}, where \code{n} is the number of intervals
 #' @param end the age in years at the end of each interval; the
 #' default is \code{start}, which produces single-year intervals;
-#' if the last interval is open-ended then \code{start[n]} can be 
+#' if the last interval is open-ended then \code{end[n]} can be 
 #' \code{Inf}
 #' @param radix size of synthetic cohort (default \code{100000})
 #' @param a0 fraction of deaths subtracted in year 0 for computing 
@@ -31,7 +32,8 @@
 #' on average \code{y[n]} more years, where \code{y[n]} is the length of the 
 #' last interval in years; if \code{y[n]} is infinite, then \code{y[n - 1]} is used.
 #' }
-#'
+#' @seealso \code{\link{mortalityRates}}
+#' @author John Fox \email{jfox@mcmaster.ca}
 #' @returns \code{lifeTable()} returns a numeric matrix with rows
 #' labeled by ages (or age intervals) and the following named columns,
 #' where \code{x} is age at the start of each interval:

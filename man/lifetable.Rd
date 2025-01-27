@@ -19,11 +19,11 @@ lifetable(
 
 \item{start}{the age in years at the start of each age interval;
 if missing, then the default is single years from \code{0} to 
-\code{n - 1}, where \code{end} is the number of intervals}
+\code{n - 1}, where \code{n} is the number of intervals}
 
 \item{end}{the age in years at the end of each interval; the
 default is \code{start}, which produces single-year intervals;
-if the last interval is open-ended then \code{start[n]} can be 
+if the last interval is open-ended then \code{end[n]} can be 
 \code{Inf}}
 
 \item{radix}{size of synthetic cohort (default \code{100000})}
@@ -54,8 +54,9 @@ where \code{x} is age at the start of each interval:
 }
 \description{
 Construct a life table starting with age-specific mortality rates
-\eqn{q}. Both single-year and grouped (e.g., 5-year) life tables
-are supported. Life tables begin at age 0.
+\eqn{q} (see \code{\link{mortalityRates}}). Both single-year and 
+grouped (e.g., 5-year) life tables are supported. Life tables begin 
+at age 0.
 }
 \details{
 The columns of the life table are computed from \code{q}
@@ -84,4 +85,10 @@ last interval in years; if \code{y[n]} is infinite, then \code{y[n - 1]} is used
 \references{
 George Barclay, \emph{Techniques of Population Analysis}, 
 Wiley, 1958.
+}
+\seealso{
+\code{\link{mortalityRates}}
+}
+\author{
+John Fox \email{jfox@mcmaster.ca}
 }
