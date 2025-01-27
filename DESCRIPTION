@@ -17,3 +17,4 @@ Language: en-US
 LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
+URL: http://www.john-fox.ca/lifetable/
