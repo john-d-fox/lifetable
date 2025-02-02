@@ -1,0 +1,137 @@
+---
+title: "Using the lifetable package"
+author: "John Fox"
+date: "`r Sys.Date()`"
+package: lifetable
+output: 
+  rmarkdown::html_vignette:
+  fig_caption: yes
+bibliography: ["lifetable.bib"]
+csl: apa.csl
+vignette: >
+  %\VignetteIndexEntry{Using the lifetable package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  fig.align = "center",
+  fig.height = 6,
+  fig.width = 7,
+  fig.path = "fig/",
+  dev = "png",
+  comment = "#>" #,
+)
+.opts <- options(scipen=5)
+```
+
+The *lifetable* package contains two user functions: `mortalityRates()`, which computes age-specific mortality rates from data on population and deaths; and `lifetable()`, which computes a life table from age-specific mortality rates.
+
+## Calculating age-specific mortality rates
+
+Data on deaths and population are typically recorded in single years of age or in age groups (of 5 years, for example). The age-specific mortality rate at a specific age or in a specific age group is defined as the number of individuals at that age, or in that age group, at the beginning of a calendar year who died during the year divided by the total population at that age, or in that age group, at the beginning of the year. Deaths are thus determined from vital statistics recorded over the course of the year, while population is typically measured (or estimated) on a particular date, usually July 1, the middle of the year.
+
+Let $P_x$ represent the number of individuals at specific age $x$ on the date of measurement, and let $D_x$ represent the number of deaths recorded during the course of the year for individuals  of age $x$ on January 1. Assuming that deaths occur evenly during the year and that population is measured on July 1, the age-$x$ population on January 1 is approximately $P_x + \frac{1}{2}D_x$, and thus the one-year age-specific mortality rate at age $x$ is 
+$$
+q^*_x = \frac{D_x}{P_x + \frac{1}{2}D_x}
+$$
+If $x$ is an age interval---say a 5-year interval, such as ages 40 to 44---then $q^*_x$ represents the proportion of individuals in the age interval at the start of the year who die during the year; this is distinct from the proportion $q_x$ alive at the start of age group $x$ (e.g., age 40) who would die in a 5-year period (e.g., before age 45). For single years of age, $q^*_x = q_x$. More on this point in the next section. 
+
+The data frame `CanadaDeaths2023` in the **lifetable** package has data on deaths and mid-year population for males and females in Canada in 2023, reported in 5-year age groups:[^sources]
+```{r CanadaDeaths2023}
+library("lifetable")
+CanadaDeaths2023
+```
+Note that the last age interval (`100`--`Inf`) is open-ended.
+
+[^sources]: For the source of these data, see `?CanadaDeaths2023`, and similarly for the other data sets in the **lifetable** package.
+
+From data like these, `mortalityRates()` can calculate age-specific mortality rates. For example, for females:
+```{r female-mortality}
+with(CanadaDeaths2023, mortalityRates(population = population.female,
+                                      deaths = deaths.female,
+                                      start = start, end = end,
+                                      day = "2023-07-01"))
+```
+Along with `population` and `deaths`, the `start` and `end` of each age interval is supplied, and `day` gives the date at which population is measured. The `day` can be given in several forms (here, `"yyyy-mm-dd"`l), including the numeric day of year, which defaults to `182` (and is equivalent to July 1 for a non-leap-year). See `?mortalityRates` for some additional details.
+
+A slight wrinkle is that the first and second years of age are treated specially, if data on single years of age are supplied for these years. It is assumed that `a0` and `a1` proportion of deaths at ages 0 and 1, respectively, occur during the first half of the year, where the argument `a0` to `mortalityRates()` defaults to `0.7`, and `a1` defaults to `0.6`. If population isn't measured mid-year, then a crude linear interpolation is done based on the date of measurement.
+
+The `lifetable` package includes two data sets with mortality rates pre-computed, both for Canada in 2022--2023:
+```{r mortality-data}
+CanadaMortality # 5-year age groups after age 4
+
+head(CanadaMortalitySingleYear) # single-year data
+tail(CanadaMortalitySingleYear) # single-year data
+```
+
+
+## Constructing life tables
+
+The description is this section and the `lifetable()` function are based on @Barclay:1958. The arguments of the `lifetable()` function are
+```{r lifetable-args}
+args(lifetable)
+```
+where: 
+
+* `q` are age-specific mortality rates;
+* `start` and `end` give the age at the beginning and end of each interval, where the default is single years of age starting at age 0 (and where `n` represents the number of values in `q`);
+* `radix` is the number of individuals in the *synthetic cohort*[^synthetic-cohort] for which the life table is computed, defaulting to 100,000;
+* `a0` and `a1` are the proportion of deaths between ages 0 and 1 and between 1 and 2 assumed to occur by the middle of the year, defaulting to 0.7 and 0.6, respectively (see below); for ages 2 and above, deaths are assumed to be evenly distributed throughout the year, and so this proportion is 0.5; and
+* `annual`, defaulting to `TRUE`, indicates whether the values of `q` are to be interpreted as annual mortality rates (i.e., $q_x^*$s).
+
+[^synthetic-cohort]: Although a life table can be computed for a real birth cohort (individuals born in a particular year) by following the cohort until everyone is dead, it is more common, as here, to construct the table for a synthetic cohort---an imaginary group of people who die according to current age-specific rates of  mortality. Because mortality rates typically change over time, a synthetic
+cohort does not correspond to any real cohort.
+
+I'll begin with a single-year life table, where $q_x^* = q_x$, because that's the simplest case:
+```{r single-year-life-table}
+(lt.female <- lifetable(q = CanadaMortalitySingleYear$q.female))
+```
+The only required argument for a single-year life table is `q`.
+
+Starting with the age-specific mortality rates $q_x$ at ages $x = 0, 1, \ldots, 109$), the life table has the following additional columns:
+
+```{r coda, include=FALSE}
+options(.opts)
+```
+
+* $l_x$ (the lower-case letter "el", `l[x]` in the output) is the number of individuals surviving to their $x$th birthday. 
+* $d_x$ (`d[x]`) is the number of individuals dying between their $x$th and $(x + 1)$st birthdays.
+* $p_x$ (`p[x]`) is proportion of individuals age $x$ who survive to their $(x + 1)$st birthday---that is, the conditional probability of surviving to age $(x + 1)$ given that one has made it to age $x$. $p_x$is the complement of $q_x$, that is, $p_x = 1 - q_x$.
+* $L_ x$ (`L[x]`) is the number of person-years lived between birthdays $x$ and $x + 1$. At most ages, it is assumed that deaths are evenly distributed during the year, and thus $L_x = l_x - \frac{1}{2}d_x$. In early childhood, mortality declines rapidly with age, and so during
+the first two years of life it is usually assumed that there is more
+mortality earlier in the year, hence $L_0 = l_0 - a_0 l_0$ and $L_1 = l_1 - a_1 l_1$, where we typically take $a_0 = 0.7$ and $a_1 = 0.6$
+* $T_x$ (`T[x]`) is the number of person-years lived after the $x$th birthday. $T_x$ simply cumulates $L_x$ from year $x$ on. A small censoring problem occurs at the end of the table if some individuals are still alive after the last year. One approach is to assume that those still alive live on average one more year. In the example table, 43 people are alive at the end of their 109th year.
+* $e_x$ (`e[x]`) is the expectation of life remaining at birthday $x$---that is, the number of additional years lived on average by those making it to their $x$th birthday. Thus $e_x = T_x/l_x$. The expectation of life at birth, $e_0$, is the single most commonly used number from the life table
+
+$q_x$ is the key column in the life table in that all other columns can be
+computed from it (and the radix), and it is the link between mortality
+data and the life table. This description of the columns of the life table also suggests how to compute a life table given age-specific mortality rates $q_x$:
+
+* Compute the expected number of deaths $d_x = q_x l_x$, rounded to the nearest integer. This is why a large number is used for the radix.
+* Then the number surviving to the next birthday is $l_[x+1] = l_x - d_x$.
+* Formulas have already been given for $p_x$, $L_x$, $T_x$, and $e_x$.
+
+The following shows the percentage of the synthetic cohort surviving at each age based on the single-year life table for females computed above and on a similar life table for males:
+
+```{r female-male-survival}
+#| out.width = "75%",
+#| fig.height = 7,
+#| fig.cap = "Percent surviving by age and sex, based on age-specific mortality rates for Canada in 2022--2023"
+lt.male <- lifetable(q = CanadaMortalitySingleYear$q.male)
+plot(0:109, lt.male[, "l[x]"]/1000, type="l", col="magenta", 
+      lwd=2, lty=2, xlab="Age", ylab="Percent Surviving")
+ lines(0:109, lt.female[, "l[x]"]/1000, type="l", col="blue",
+       lty=1, lwd=2)
+ legend("bottomleft", inset=0.02, legend=c("female", "male"),
+        lty=1:2, lwd=2, col=c("blue", "magenta"))
+ grid()
+```
+
+
+## Reference
+
