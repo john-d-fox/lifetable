@@ -26,8 +26,9 @@ knitr::opts_chunk$set(
   dev = "png",
   comment = "#>" #,
 )
-.opts <- options(scipen=5)
+.opts <- options(scipen=10)
 ```
+
 
 The *lifetable* package contains two user functions: `mortalityRates()`, which computes age-specific mortality rates from data on population and deaths; and `lifetable()`, which computes a life table from age-specific mortality rates.
 
@@ -52,10 +53,11 @@ Note that the last age interval (`100`--`Inf`) is open-ended.
 
 From data like these, `mortalityRates()` can calculate age-specific mortality rates. For example, for females:
 ```{r female-mortality}
-with(CanadaDeaths2023, mortalityRates(population = population.female,
-                                      deaths = deaths.female,
-                                      start = start, end = end,
-                                      day = "2023-07-01"))
+(CanMort23 <- with(CanadaDeaths2023, 
+                   mortalityRates(population = population.female,
+                                  deaths = deaths.female,
+                                  start = start, end = end,
+                                  day = "2023-07-01")))
 ```
 Along with `population` and `deaths`, the `start` and `end` of each age interval is supplied, and `day` gives the date at which population is measured. The `day` can be given in several forms (here, `"yyyy-mm-dd"`l), including the numeric day of year, which defaults to `182` (and is equivalent to July 1 for a non-leap-year). See `?mortalityRates` for some additional details.
 
@@ -72,7 +74,7 @@ tail(CanadaMortalitySingleYear) # single-year data
 
 ## Constructing life tables
 
-The description is this section and the `lifetable()` function are based on @Barclay:1958. The arguments of the `lifetable()` function are
+The description is this section and the calculations performed by the `lifetable()` function are based on @Barclay:1958. The arguments of the `lifetable()` function are
 ```{r lifetable-args}
 args(lifetable)
 ```
@@ -87,6 +89,8 @@ where:
 [^synthetic-cohort]: Although a life table can be computed for a real birth cohort (individuals born in a particular year) by following the cohort until everyone is dead, it is more common, as here, to construct the table for a synthetic cohort---an imaginary group of people who die according to current age-specific rates of  mortality. Because mortality rates typically change over time, a synthetic
 cohort does not correspond to any real cohort.
 
+### Single-year life tables
+
 I'll begin with a single-year life table, where $q_x^* = q_x$, because that's the simplest case:
 ```{r single-year-life-table}
 (lt.female <- lifetable(q = CanadaMortalitySingleYear$q.female))
@@ -95,17 +99,13 @@ The only required argument for a single-year life table is `q`.
 
 Starting with the age-specific mortality rates $q_x$ at ages $x = 0, 1, \ldots, 109$), the life table has the following additional columns:
 
-```{r coda, include=FALSE}
-options(.opts)
-```
-
-* $l_x$ (the lower-case letter "el", `l[x]` in the output) is the number of individuals surviving to their $x$th birthday. 
+* $l_x$ (the lower-case letter "el", `l[x]` in the output) is the number of individuals surviving to their $x$th birthday; $l_0$ is the radix of the life table.
 * $d_x$ (`d[x]`) is the number of individuals dying between their $x$th and $(x + 1)$st birthdays.
-* $p_x$ (`p[x]`) is proportion of individuals age $x$ who survive to their $(x + 1)$st birthday---that is, the conditional probability of surviving to age $(x + 1)$ given that one has made it to age $x$. $p_x$is the complement of $q_x$, that is, $p_x = 1 - q_x$.
+* $p_x$ (`p[x]`) is proportion of individuals age $x$ who survive to their $(x + 1)$st birthday---that is, the conditional probability of surviving to age $x + 1$ given that one has made it to age $x$. $p_x$is the complement of $q_x$, that is, $p_x = 1 - q_x$.
 * $L_ x$ (`L[x]`) is the number of person-years lived between birthdays $x$ and $x + 1$. At most ages, it is assumed that deaths are evenly distributed during the year, and thus $L_x = l_x - \frac{1}{2}d_x$. In early childhood, mortality declines rapidly with age, and so during
 the first two years of life it is usually assumed that there is more
 mortality earlier in the year, hence $L_0 = l_0 - a_0 l_0$ and $L_1 = l_1 - a_1 l_1$, where we typically take $a_0 = 0.7$ and $a_1 = 0.6$
-* $T_x$ (`T[x]`) is the number of person-years lived after the $x$th birthday. $T_x$ simply cumulates $L_x$ from year $x$ on. A small censoring problem occurs at the end of the table if some individuals are still alive after the last year. One approach is to assume that those still alive live on average one more year. In the example table, 43 people are alive at the end of their 109th year.
+* $T_x$ (`T[x]`) is the number of person-years lived after the $x$th birthday. $T_x$ simply cumulates $L_x$ from year $x$ on. A small censoring problem occurs at the end of the table if some individuals are still alive after the last year. One approach is to assume that those still alive live on average one more year; thus, $T_x = \sum_{x' \ge x} L_{x'} + l_X$, where $X$ is the largest value of $x$. In the example table, 43 people are alive at the end of their 109th year.
 * $e_x$ (`e[x]`) is the expectation of life remaining at birthday $x$---that is, the number of additional years lived on average by those making it to their $x$th birthday. Thus $e_x = T_x/l_x$. The expectation of life at birth, $e_0$, is the single most commonly used number from the life table
 
 $q_x$ is the key column in the life table in that all other columns can be
@@ -113,10 +113,10 @@ computed from it (and the radix), and it is the link between mortality
 data and the life table. This description of the columns of the life table also suggests how to compute a life table given age-specific mortality rates $q_x$:
 
 * Compute the expected number of deaths $d_x = q_x l_x$, rounded to the nearest integer. This is why a large number is used for the radix.
-* Then the number surviving to the next birthday is $l_[x+1] = l_x - d_x$.
+* Then the number surviving to the next birthday is $l_{x+1} = l_x - d_x$.
 * Formulas have already been given for $p_x$, $L_x$, $T_x$, and $e_x$.
 
-The following shows the percentage of the synthetic cohort surviving at each age based on the single-year life table for females computed above and on a similar life table for males:
+The following graph shows the percentage of the synthetic cohort surviving at each age, based on the single-year life table for females computed above and on a similar life table for males:
 
 ```{r female-male-survival}
 #| out.width = "75%",
@@ -131,7 +131,37 @@ plot(0:109, lt.male[, "l[x]"]/1000, type="l", col="magenta",
         lty=1:2, lwd=2, col=c("blue", "magenta"))
  grid()
 ```
+### Life tables for age groups
 
+I earlier used the `mortalityRates()` function to calculate age-specific mortality rates for females in Canada, based on death and population data for 2023:
+```{r recall-CanMort23}
+CanMort23
+```
+These annual mortality rates are for 5-year age intervals, and from the mortality rates, we can compute a life table based on the 5-year age groups:
+```{r life-table-5yr}
+with(CanMort23,
+     lifetable(q=mortality.rate, start=start, end=end))
+```
+
+The arithmetic of the life table for age groups is very similar to that of the life table for single years of age. Assuming that the input mortality rates $q_x^*$ are for annual mortality, we must first compute the age-specific mortality rate $q_x$, the conditional probability of dying between age $x$ and the start of the next age group, age $x + \Delta x$. In the single-year life table, $\Delta x = 1$, in the current example, $\Delta x = 5$, and more generally, $\Delta x$ can depend on $x$, as I'll illustrate shortly. 
+
+Assuming that the mortality rate is constant in the age interval from $x$ to $x + \Delta x$, $q_x = 1 - (1 - q_x^*)^{\Delta x}$. Then, as before, the conditional probability of surviving to age $x + \Delta x$ is $p_x = 1 - q_x$, and the expected number of deaths in the age interval is $d_x = q_x l_x$. To get the number of person-years lived in the age interval, we need to account for the length of the interval $\Delta x$: $L_x = (l_x - 0.5 d_x) \Delta x$. Similarly, $T_x = \sum_{x' \ge x} L_{x'} + l_X \Delta x$, which assumes that those alive at the end of the life table, $l_X$, on average live $\Delta x$ more years. As before, expectation of life at each age is $e_x = T_x/l_x$.
+
+As mentioned, $\Delta x$ can depend on $x$. For example, the `CanadaMortality` data set in the **lifetable** package contains the following age-group-specific mortality rates for males and females Canada in 2023:
+
+```{r CanadaMortality}
+CanadaMortality
+```
+Here, $\Delta x$ for $x = 0$ is 1 year, for $x = 1$ is 4 years, and for $1 < x < 90$ is 5 years, with the last age group, for which $X = 90$, open-ended. Unequal age groups present no new difficulties, other than allowing $\Delta x$ to vary; for example, for males:
+```{r life-table-irregular-groups}
+with(CanadaMortality,
+     lifetable(q=q.male, start=start, end=end))
+```
+
+
+```{r coda, include=FALSE}
+options(.opts)
+```
 
 ## Reference
 

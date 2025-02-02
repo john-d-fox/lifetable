@@ -12,7 +12,7 @@
 
 <meta name="author" content="John Fox" />
 
-<meta name="date" content="2025-02-01" />
+<meta name="date" content="2025-02-02" />
 
 <title>Using the lifetable package</title>
 
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Using the lifetable package</h1>
 <h4 class="author">John Fox</h4>
-<h4 class="date">2025-02-01</h4>
+<h4 class="date">2025-02-02</h4>
 
 
 
@@ -431,32 +431,33 @@ age groups:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 is open-ended.</p>
 <p>From data like these, <code>mortalityRates()</code> can calculate
 age-specific mortality rates. For example, for females:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">with</span>(CanadaDeaths2023, <span class="fu">mortalityRates</span>(<span class="at">population =</span> population.female,</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                                      <span class="at">deaths =</span> deaths.female,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                                      <span class="at">start =</span> start, <span class="at">end =</span> end,</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                                      <span class="at">day =</span> <span class="st">&quot;2023-07-01&quot;</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;    start end mortality.rate</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1      0   4  0.00092756946</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2      5   9  0.00009476163</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 3     10  14  0.00011378187</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 4     15  19  0.00026279540</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 5     20  24  0.00042102152</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 6     25  29  0.00056164607</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 7     30  34  0.00070196332</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 8     35  39  0.00089429724</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 9     40  44  0.00108204343</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 10    45  49  0.00155145429</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 11    50  54  0.00228329768</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 12    55  59  0.00355464728</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 13    60  64  0.00557241455</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 14    65  69  0.00874336648</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 15    70  74  0.01379203296</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 16    75  79  0.02347815554</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; 17    80  84  0.04090618666</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; 18    85  89  0.07491591468</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 19    90  94  0.13615042834</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 20    95  99  0.22865238113</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 21   100 Inf  0.36390505053</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>(CanMort23 <span class="ot">&lt;-</span> <span class="fu">with</span>(CanadaDeaths2023, </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                   <span class="fu">mortalityRates</span>(<span class="at">population =</span> population.female,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                                  <span class="at">deaths =</span> deaths.female,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                                  <span class="at">start =</span> start, <span class="at">end =</span> end,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>                                  <span class="at">day =</span> <span class="st">&quot;2023-07-01&quot;</span>)))</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;    start end mortality.rate</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 1      0   4  0.00092756946</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 2      5   9  0.00009476163</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 3     10  14  0.00011378187</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 4     15  19  0.00026279540</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 5     20  24  0.00042102152</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 6     25  29  0.00056164607</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 7     30  34  0.00070196332</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 8     35  39  0.00089429724</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 9     40  44  0.00108204343</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 10    45  49  0.00155145429</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 11    50  54  0.00228329768</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 12    55  59  0.00355464728</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 13    60  64  0.00557241455</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 14    65  69  0.00874336648</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 15    70  74  0.01379203296</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; 16    75  79  0.02347815554</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; 17    80  84  0.04090618666</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 18    85  89  0.07491591468</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 19    90  94  0.13615042834</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 20    95  99  0.22865238113</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; 21   100 Inf  0.36390505053</span></span></code></pre></div>
 <p>Along with <code>population</code> and <code>deaths</code>, the
 <code>start</code> and <code>end</code> of each age interval is
 supplied, and <code>day</code> gives the date at which population is
@@ -518,9 +519,9 @@ mortality rates pre-computed, both for Canada in 2022–2023:</p>
 </div>
 <div id="constructing-life-tables" class="section level2">
 <h2>Constructing life tables</h2>
-<p>The description is this section and the <code>lifetable()</code>
-function are based on <span class="citation">Barclay (1958)</span>. The
-arguments of the <code>lifetable()</code> function are</p>
+<p>The description is this section and the calculations performed by the
+<code>lifetable()</code> function are based on <span class="citation">Barclay (1958)</span>. The arguments of the
+<code>lifetable()</code> function are</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">args</span>(lifetable)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; function (q, start = 0:(n - 1), end = start, radix = 100000, </span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;     a0 = 0.7, a1 = 0.6, annual = TRUE) </span></span>
@@ -544,6 +545,8 @@ the year, and so this proportion is 0.5; and</li>
 whether the values of <code>q</code> are to be interpreted as annual
 mortality rates (i.e., <span class="math inline">\(q_x^*\)</span>s).</li>
 </ul>
+<div id="single-year-life-tables" class="section level3">
+<h3>Single-year life tables</h3>
 <p>I’ll begin with a single-year life table, where <span class="math inline">\(q_x^* = q_x\)</span>, because that’s the simplest
 case:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>(lt.female <span class="ot">&lt;-</span> <span class="fu">lifetable</span>(<span class="at">q =</span> CanadaMortalitySingleYear<span class="sc">$</span>q.female))</span>
@@ -666,15 +669,16 @@ additional columns:</p>
 <ul>
 <li><span class="math inline">\(l_x\)</span> (the lower-case letter
 “el”, <code>l[x]</code> in the output) is the number of individuals
-surviving to their <span class="math inline">\(x\)</span>th
-birthday.</li>
+surviving to their <span class="math inline">\(x\)</span>th birthday;
+<span class="math inline">\(l_0\)</span> is the radix of the life
+table.</li>
 <li><span class="math inline">\(d_x\)</span> (<code>d[x]</code>) is the
 number of individuals dying between their <span class="math inline">\(x\)</span>th and <span class="math inline">\((x +
 1)\)</span>st birthdays.</li>
 <li><span class="math inline">\(p_x\)</span> (<code>p[x]</code>) is
 proportion of individuals age <span class="math inline">\(x\)</span> who
 survive to their <span class="math inline">\((x + 1)\)</span>st
-birthday—that is, the conditional probability of surviving to age <span class="math inline">\((x + 1)\)</span> given that one has made it to age
+birthday—that is, the conditional probability of surviving to age <span class="math inline">\(x + 1\)</span> given that one has made it to age
 <span class="math inline">\(x\)</span>. <span class="math inline">\(p_x\)</span>is the complement of <span class="math inline">\(q_x\)</span>, that is, <span class="math inline">\(p_x = 1 - q_x\)</span>.</li>
 <li><span class="math inline">\(L_ x\)</span> (<code>L[x]</code>) is the
 number of person-years lived between birthdays <span class="math inline">\(x\)</span> and <span class="math inline">\(x +
@@ -689,8 +693,9 @@ take <span class="math inline">\(a_0 = 0.7\)</span> and <span class="math inline
 number of person-years lived after the <span class="math inline">\(x\)</span>th birthday. <span class="math inline">\(T_x\)</span> simply cumulates <span class="math inline">\(L_x\)</span> from year <span class="math inline">\(x\)</span> on. A small censoring problem occurs at
 the end of the table if some individuals are still alive after the last
 year. One approach is to assume that those still alive live on average
-one more year. In the example table, 43 people are alive at the end of
-their 109th year.</li>
+one more year; thus, <span class="math inline">\(T_x = \sum_{x&#39; \ge
+x} L_{x&#39;} + l_X\)</span>, where <span class="math inline">\(X\)</span> is the largest value of <span class="math inline">\(x\)</span>. In the example table, 43 people are
+alive at the end of their 109th year.</li>
 <li><span class="math inline">\(e_x\)</span> (<code>e[x]</code>) is the
 expectation of life remaining at birthday <span class="math inline">\(x\)</span>—that is, the number of additional years
 lived on average by those making it to their <span class="math inline">\(x\)</span>th birthday. Thus <span class="math inline">\(e_x = T_x/l_x\)</span>. The expectation of life at
@@ -705,12 +710,12 @@ compute a life table given age-specific mortality rates <span class="math inline
 <ul>
 <li>Compute the expected number of deaths <span class="math inline">\(d_x = q_x l_x\)</span>, rounded to the nearest
 integer. This is why a large number is used for the radix.</li>
-<li>Then the number surviving to the next birthday is <span class="math inline">\(l_[x+1] = l_x - d_x\)</span>.</li>
+<li>Then the number surviving to the next birthday is <span class="math inline">\(l_{x+1} = l_x - d_x\)</span>.</li>
 <li>Formulas have already been given for <span class="math inline">\(p_x\)</span>, <span class="math inline">\(L_x\)</span>, <span class="math inline">\(T_x\)</span>, and <span class="math inline">\(e_x\)</span>.</li>
 </ul>
-<p>The following shows the percentage of the synthetic cohort surviving
-at each age based on the single-year life table for females computed
-above and on a similar life table for males:</p>
+<p>The following graph shows the percentage of the synthetic cohort
+surviving at each age, based on the single-year life table for females
+computed above and on a similar life table for males:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>lt.male <span class="ot">&lt;-</span> <span class="fu">lifetable</span>(<span class="at">q =</span> CanadaMortalitySingleYear<span class="sc">$</span>q.male)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">109</span>, lt.male[, <span class="st">&quot;l[x]&quot;</span>]<span class="sc">/</span><span class="dv">1000</span>, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;magenta&quot;</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>      <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Percent Surviving&quot;</span>)</span>
@@ -725,6 +730,142 @@ above and on a similar life table for males:</p>
 Percent surviving by age and sex, based on age-specific mortality rates
 for Canada in 2022–2023
 </p>
+</div>
+</div>
+<div id="life-tables-for-age-groups" class="section level3">
+<h3>Life tables for age groups</h3>
+<p>I earlier used the <code>mortalityRates()</code> function to
+calculate age-specific mortality rates for females in Canada, based on
+death and population data for 2023:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>CanMort23</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;    start end mortality.rate</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; 1      0   4  0.00092756946</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 2      5   9  0.00009476163</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 3     10  14  0.00011378187</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 4     15  19  0.00026279540</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 5     20  24  0.00042102152</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 6     25  29  0.00056164607</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 7     30  34  0.00070196332</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 8     35  39  0.00089429724</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 9     40  44  0.00108204343</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 10    45  49  0.00155145429</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; 11    50  54  0.00228329768</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 12    55  59  0.00355464728</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; 13    60  64  0.00557241455</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 14    65  69  0.00874336648</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; 15    70  74  0.01379203296</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; 16    75  79  0.02347815554</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; 17    80  84  0.04090618666</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; 18    85  89  0.07491591468</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; 19    90  94  0.13615042834</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt; 20    95  99  0.22865238113</span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt; 21   100 Inf  0.36390505053</span></span></code></pre></div>
+<p>These annual mortality rates are for 5-year age intervals, and from
+the mortality rates, we can compute a life table based on the 5-year age
+groups:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">with</span>(CanMort23,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>     <span class="fu">lifetable</span>(<span class="at">q=</span>mortality.rate, <span class="at">start=</span>start, <span class="at">end=</span>end))</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;                 l[x]  d[x]    p[x]    q[x]   L[x]    T[x]      e[x]</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 0 - 4 years   100000   463 0.99537 0.00463 498840 8413525 84.135250</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 5 - 9 years    99537    47 0.99953 0.00047 497570 7914685 79.515004</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 10 - 14 years  99490    57 0.99943 0.00057 497310 7417115 74.551362</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 15 - 19 years  99433   130 0.99869 0.00131 496840 6919805 69.592640</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 20 - 24 years  99303   209 0.99790 0.00210 495995 6422965 64.680473</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 25 - 29 years  99094   278 0.99719 0.00281 494775 5926970 59.811593</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 30 - 34 years  98816   346 0.99650 0.00350 493215 5432195 54.972828</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 35 - 39 years  98470   439 0.99554 0.00446 491250 4938980 50.157205</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 40 - 44 years  98031   529 0.99460 0.00540 488830 4447730 45.370648</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 45 - 49 years  97502   754 0.99227 0.00773 485625 3958900 40.603270</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; 50 - 54 years  96748  1099 0.98864 0.01136 480990 3473275 35.900225</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; 55 - 59 years  95649  1688 0.98235 0.01765 474025 2992285 31.284018</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; 60 - 64 years  93961  2589 0.97245 0.02755 463335 2518260 26.801120</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; 65 - 69 years  91372  3925 0.95704 0.04296 447045 2054925 22.489658</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; 70 - 74 years  87447  5866 0.93292 0.06708 422570 1607880 18.386909</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; 75 - 79 years  81581  9138 0.88799 0.11201 385060 1185310 14.529241</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 80 - 84 years  72443 13653 0.81153 0.18847 328080  800250 11.046616</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; 85 - 89 years  58790 18960 0.67749 0.32251 246550  472170  8.031468</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; 90 - 94 years  39830 20670 0.48105 0.51895 147475  225620  5.664574</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt; 95 - 99 years  19160 13928 0.27306 0.72694  60980   78145  4.078549</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; 100+ years      5232  4687 0.10414 0.89586  14440   17165  3.280772</span></span></code></pre></div>
+<p>The arithmetic of the life table for age groups is very similar to
+that of the life table for single years of age. Assuming that the input
+mortality rates <span class="math inline">\(q_x^*\)</span> are for
+annual mortality, we must first compute the age-specific mortality rate
+<span class="math inline">\(q_x\)</span>, the conditional probability of
+dying between age <span class="math inline">\(x\)</span> and the start
+of the next age group, age <span class="math inline">\(x + \Delta
+x\)</span>. In the single-year life table, <span class="math inline">\(\Delta x = 1\)</span>, in the current example,
+<span class="math inline">\(\Delta x = 5\)</span>, and more generally,
+<span class="math inline">\(\Delta x\)</span> can depend on <span class="math inline">\(x\)</span>, as I’ll illustrate shortly.</p>
+<p>Assuming that the mortality rate is constant in the age interval from
+<span class="math inline">\(x\)</span> to <span class="math inline">\(x
++ \Delta x\)</span>, <span class="math inline">\(q_x = 1 - (1 -
+q_x^*)^{\Delta x}\)</span>. Then, as before, the conditional probability
+of surviving to age <span class="math inline">\(x + \Delta x\)</span> is
+<span class="math inline">\(p_x = 1 - q_x\)</span>, and the expected
+number of deaths in the age interval is <span class="math inline">\(d_x
+= q_x l_x\)</span>. To get the number of person-years lived in the age
+interval, we need to account for the length of the interval <span class="math inline">\(\Delta x\)</span>: <span class="math inline">\(L_x
+= (l_x - 0.5 d_x) \Delta x\)</span>. Similarly, <span class="math inline">\(T_x = \sum_{x&#39; \ge x} L_{x&#39;} + l_X \Delta
+x\)</span>, which assumes that those alive at the end of the life table,
+<span class="math inline">\(l_X\)</span>, on average live <span class="math inline">\(\Delta x\)</span> more years. As before,
+expectation of life at each age is <span class="math inline">\(e_x =
+T_x/l_x\)</span>.</p>
+<p>As mentioned, <span class="math inline">\(\Delta x\)</span> can
+depend on <span class="math inline">\(x\)</span>. For example, the
+<code>CanadaMortality</code> data set in the <strong>lifetable</strong>
+package contains the following age-group-specific mortality rates for
+males and females Canada in 2023:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>CanadaMortality</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;    start end q.female q.male</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; 1      0   0   0.0042 0.0051</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 2      1   4   0.0002 0.0002</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 3      5   9   0.0001 0.0001</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 4     10  14   0.0001 0.0001</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 5     15  19   0.0003 0.0005</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 6     20  24   0.0004 0.0007</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 7     25  29   0.0006 0.0011</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 8     30  34   0.0007 0.0014</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 9     35  39   0.0009 0.0017</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 10    40  44   0.0011 0.0021</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 11    45  49   0.0016 0.0026</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 12    50  54   0.0023 0.0040</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; 13    55  59   0.0036 0.0061</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; 14    60  64   0.0056 0.0090</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; 15    65  69   0.0088 0.0137</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 16    70  74   0.0139 0.0210</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 17    75  79   0.0238 0.0335</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 18    80  84   0.0418 0.0584</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; 19    85  89   0.0779 0.1062</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; 20    90 Inf   0.1840 0.2208</span></span></code></pre></div>
+<p>Here, <span class="math inline">\(\Delta x\)</span> for <span class="math inline">\(x = 0\)</span> is 1 year, for <span class="math inline">\(x = 1\)</span> is 4 years, and for <span class="math inline">\(1 &lt; x &lt; 90\)</span> is 5 years, with the
+last age group, for which <span class="math inline">\(X = 90\)</span>,
+open-ended. Unequal age groups present no new difficulties, other than
+allowing <span class="math inline">\(\Delta x\)</span> to vary; for
+example, for males:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">with</span>(CanadaMortality,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>     <span class="fu">lifetable</span>(<span class="at">q=</span>q.male, <span class="at">start=</span>start, <span class="at">end=</span>end))</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt;                    l[x]  d[x]    p[x]    q[x]   L[x]    T[x]      e[x]</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; less than 1 year 100000   510 0.99490 0.00510  99643 7952723 79.527230</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; 1 - 4 years       99490    80 0.99920 0.00080 397800 7853080 78.933360</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 5 - 9 years       99410    50 0.99950 0.00050 496925 7455280 74.995272</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 10 - 14 years     99360    50 0.99950 0.00050 496675 6958355 70.031753</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 15 - 19 years     99310   248 0.99750 0.00250 495930 6461680 65.065754</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 20 - 24 years     99062   347 0.99650 0.00350 494445 5965750 60.222386</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 25 - 29 years     98715   542 0.99451 0.00549 492220 5471305 55.425265</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 30 - 34 years     98173   685 0.99302 0.00698 489150 4979085 50.717458</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; 35 - 39 years     97488   826 0.99153 0.00847 485375 4489935 46.056284</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 40 - 44 years     96662  1011 0.98954 0.01046 480780 4004560 41.428483</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; 45 - 49 years     95651  1237 0.98707 0.01293 475165 3523780 36.839970</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; 50 - 54 years     94414  1873 0.98016 0.01984 467385 3048615 32.289862</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; 55 - 59 years     92541  2788 0.96987 0.03013 455735 2581230 27.892826</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; 60 - 64 years     89753  3967 0.95580 0.04420 438845 2125495 23.681604</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; 65 - 69 years     85786  5718 0.93335 0.06665 414635 1686650 19.661134</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; 70 - 74 years     80068  8061 0.89932 0.10068 380185 1272015 15.886684</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; 75 - 79 years     72007 11280 0.84335 0.15665 331835  891830 12.385324</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; 80 - 84 years     60727 15779 0.74017 0.25983 264190  559995  9.221516</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; 85 - 89 years     44948 19308 0.57043 0.42957 176470  295805  6.581049</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; 90+ years         25640 18275 0.28724 0.71276  82510  119335  4.654251</span></span></code></pre></div>
 </div>
 </div>
 <div id="reference" class="section level2 unnumbered">
