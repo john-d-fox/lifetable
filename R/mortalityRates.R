@@ -44,8 +44,7 @@
 #' (mortality2023 <- with(CanadaDeaths2023,  
 #'                        mortalityRates(population.female, deaths.female,
 #'                              start=start, end=end, day="2023-07-02")))
-#' with(mortality2023, lifetable(mortality2023$mortality.rate,
-#'                               start=start, end=end))
+#' with(mortality2023, lifetable(mortality.rate, start=start, end=end))
 mortalityRates <- function(population, deaths, 
                            start=0:(n - 1), end=start, 
                            day=182, leapyear=FALSE,

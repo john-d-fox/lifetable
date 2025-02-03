@@ -2,7 +2,7 @@ Package: lifetable
 Type: Package
 Title: Construct a Life Table
 Version: 0.5-0
-Date: 2025-02-02
+Date: 2025-02-03
 Authors@R: person(given = "John", family = "Fox", role=c("aut", "cre"), 
   email="jfox@mcmaster.ca", comment = c(ORCID = "0000-0002-1196-8012"))
 Maintainer: John Fox <jfox@mcmaster.ca>
